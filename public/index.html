@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STOCKLY - Company Particulars Inventory Hub</title>
+  <!-- Google Fonts: Outfit (headings) & Inter (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Lucide Icons (rendered dynamically via JS or CDN) -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark-theme">
+  <!-- Top Bar -->
+  <header class="top-bar">
+    <div class="logo-area">
+      <div class="logo-icon">
+        <i data-lucide="package-open"></i>
+      </div>
+      <div class="logo-text">
+        <h1>STOCKLY</h1>
+        <span>Particulars Portal</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div class="stats-mini">
+        <span class="pulse-dot"></span>
+        <span id="server-status">Connecting to backend...</span>
+      </div>
+      <button id="theme-toggle" class="btn btn-icon" title="Toggle Theme">
+        <i data-lucide="sun"></i>
+      </button>
+      <button id="btn-export-csv" class="btn btn-secondary btn-icon-text admin-only">
+        <i data-lucide="file-spreadsheet"></i>
+        <span>Export Excel</span>
+      </button>
+      <button id="btn-export" class="btn btn-secondary btn-icon-text admin-only">
+        <i data-lucide="download"></i>
+        <span>Backup JSON</span>
+      </button>
+      <button id="btn-import" class="btn btn-secondary btn-icon-text admin-only">
+        <i data-lucide="upload"></i>
+        <span>Restore JSON</span>
+      </button>
+      <input type="file" id="import-file-input" style="display: none;" accept=".json">
+      <button id="btn-add-item" class="btn btn-primary btn-icon-text admin-only">
+        <i data-lucide="plus-circle"></i>
+        <span>New Item</span>
+      </button>
+      <button id="btn-logout" class="btn btn-secondary btn-icon-text" title="Sign Out">
+        <i data-lucide="log-out"></i>
+        <span>Sign Out</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="dashboard-container">
+    <!-- Key Statistics Grid -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon bg-violet">
+          <i data-lucide="layers"></i>
+        </div>
+        <div class="stat-info">
+          <span class="stat-label">Total Unique Items</span>
+          <h3 id="stat-total-items" class="stat-value">0</h3>
+        </div>
+      </div>
+      
+      <div class="stat-card warning-state">
+        <div class="stat-icon bg-amber">
+          <i data-lucide="alert-triangle"></i>
+        </div>
+        <div class="stat-info">
+          <span class="stat-label">Low Stock Alerts</span>
+          <h3 id="stat-low-stock" class="stat-value">0</h3>
+        </div>
+      </div>
+
+      <div class="stat-card danger-state">
+        <div class="stat-icon bg-red">
+          <i data-lucide="x-octagon"></i>
+        </div>
+        <div class="stat-info">
+          <span class="stat-label">Out of Stock</span>
+          <h3 id="stat-out-of-stock" class="stat-value">0</h3>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon bg-green">
+          <i data-lucide="activity"></i>
+        </div>
+        <div class="stat-info">
+          <span class="stat-label">Transactions Today</span>
+          <h3 id="stat-tx-today" class="stat-value">0</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Workspace Split -->
+    <div class="workspace-grid">
+      <!-- Inventory Section -->
+      <section class="inventory-section card">
+        <div class="card-header">
+          <div class="header-left">
+            <h2>Inventory Items</h2>
+            <p>Manage quantities and track statuses</p>
+          </div>
+          <!-- Filter Controls -->
+          <div class="filters-container">
+            <div class="search-box">
+              <i data-lucide="search" class="search-icon"></i>
+              <input type="text" id="search-input" placeholder="Search particulars...">
+            </div>
+            
+            <select id="filter-brand" class="select-dropdown">
+              <option value="ALL">All Brands</option>
+              <option value="UPES">UPES</option>
+              <option value="PEARL">PEARL</option>
+              <option value="Other">Other Brands</option>
+            </select>
+
+            <select id="filter-category" class="select-dropdown">
+              <option value="ALL">All Categories</option>
+              <option value="Flyers">Flyers</option>
+              <option value="Brochures">Brochures</option>
+              <option value="Stationery">Stationery</option>
+              <option value="Cloths & Table Cloths">Cloths</option>
+              <option value="Forms & OMR">Forms & OMR</option>
+              <option value="Calenders & Standees">Calenders & Standees</option>
+            </select>
+
+            <select id="filter-status" class="select-dropdown">
+              <option value="ALL">All Status</option>
+              <option value="GOOD">In Stock</option>
+              <option value="LOW">Low Stock</option>
+              <option value="OUT">Out of Stock</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="inventory-table">
+            <thead>
+              <tr>
+                <th>Particular Name</th>
+                <th>Brand</th>
+                <th>Category</th>
+                <th class="text-right">Stock Status</th>
+                <th class="text-right">Current Qty</th>
+                <th class="text-right">Threshold</th>
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="inventory-tbody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Sidebar Log Section -->
+      <section class="logs-section card">
+        <div class="card-header">
+          <div>
+            <h2>Transaction Log</h2>
+            <p>Realtime inventory activity</p>
+          </div>
+          <button id="btn-clear-logs-filter" class="btn btn-link btn-xs" style="display:none;">Clear Filters</button>
+        </div>
+        <div class="logs-container" id="logs-container">
+          <!-- Dynamically populated -->
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- MODAL: ADD / EDIT ITEM -->
+  <div class="modal-overlay" id="item-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="item-modal-title">New Inventory Item</h3>
+        <button class="modal-close btn-close-modal"><i data-lucide="x"></i></button>
+      </div>
+      <form id="item-form">
+        <input type="hidden" id="edit-item-id">
+        
+        <div class="form-group">
+          <label for="item-name">Particular Name *</label>
+          <input type="text" id="item-name" required placeholder="e.g., UPES Notebook, Pearl Pens">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="item-brand">Brand / Affiliation *</label>
+            <select id="item-brand" required>
+              <option value="UPES">UPES</option>
+              <option value="PEARL">PEARL</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="item-category">Category *</label>
+            <select id="item-category" required>
+              <option value="Flyers">Flyers</option>
+              <option value="Brochures">Brochures</option>
+              <option value="Stationery">Stationery</option>
+              <option value="Cloths & Table Cloths">Cloths & Table Cloths</option>
+              <option value="Forms & OMR">Forms & OMR</option>
+              <option value="Calenders & Standees">Calenders & Standees</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group" id="initial-stock-group">
+          <label for="item-stock">Initial Stock Quantity</label>
+          <input type="number" id="item-stock" min="0" value="0">
+        </div>
+
+        <div class="form-group" id="threshold-group">
+          <label for="item-threshold">Low Stock Warning Level *</label>
+          <input type="number" id="item-threshold" min="1" value="10" required>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary btn-close-modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Item</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: RECORD TRANSACTION (USAGE / RESTOCK) -->
+  <div class="modal-overlay" id="transaction-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="tx-modal-title">Record Stock Movement</h3>
+        <button class="modal-close btn-close-modal"><i data-lucide="x"></i></button>
+      </div>
+      
+      <!-- Transaction Tabs -->
+      <div class="tx-tabs">
+        <button type="button" id="tab-usage" class="tx-tab active" onclick="setTxType('usage')">
+          <i data-lucide="trending-down"></i> Record Usage (Out)
+        </button>
+        <button type="button" id="tab-restock" class="tx-tab" onclick="setTxType('restock')">
+          <i data-lucide="trending-up"></i> Restock (In)
+        </button>
+      </div>
+
+      <form id="transaction-form">
+        <input type="hidden" id="tx-item-id">
+        <input type="hidden" id="tx-type" value="usage"> <!-- usage or restock -->
+
+        <div class="form-group">
+          <label>Particular Item</label>
+          <div id="tx-item-display" class="static-input-display">Item Name here</div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="tx-quantity">Quantity *</label>
+            <input type="number" id="tx-quantity" min="1" required placeholder="Enter amount">
+            <span class="input-subtext" id="tx-stock-subtext">Current Stock: 0</span>
+          </div>
+
+          <div class="form-group">
+            <label for="tx-date">Operation Date</label>
+            <input type="datetime-local" id="tx-date" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="tx-user">Responsible Representative *</label>
+          <input type="text" id="tx-user" required placeholder="Your name or team">
+        </div>
+
+        <div class="form-group">
+          <label for="tx-remarks" id="label-remarks">Purpose / Notes *</label>
+          <textarea id="tx-remarks" rows="3" required placeholder="e.g. Distributed to School of Law team / Purchased from standard vendor"></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary btn-close-modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-submit-tx">Confirm Outflow</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="toast-notification">
+    <div class="toast-content">
+      <i data-lucide="info" id="toast-icon"></i>
+      <span id="toast-message">Notification message here</span>
+    </div>
+  </div>
+
+  <!-- MODAL: LOGIN SCREEN OVERLAY -->
+  <div class="modal-overlay active" id="login-modal" style="pointer-events: all; opacity: 1; background-color: var(--bg-main); z-index: 2000;">
+    <div class="modal-card" style="max-width: 400px; border: 1px solid var(--border-color); box-shadow: var(--shadow-lg);">
+      <div class="modal-header" style="justify-content: center; padding: 2rem 1.5rem 0.5rem 1.5rem; border-bottom: none;">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem; text-align: center;">
+          <div class="logo-icon" style="margin-bottom: 0.5rem;">
+            <i data-lucide="lock"></i>
+          </div>
+          <h2 style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; letter-spacing: 0.5px;">STOCKLY SECURE</h2>
+          <p style="font-size: 0.8rem; color: var(--text-muted);">Enter passcode to access inventory</p>
+        </div>
+      </div>
+      <form id="login-form" style="padding: 1.5rem 2rem 2rem 2rem;">
+        <div class="form-group">
+          <label for="login-role">Choose Account Role</label>
+          <select id="login-role" required style="background-color: var(--bg-input);">
+            <option value="staff">Staff (Removal Only)</option>
+            <option value="admin">Administrator (Full Access)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="login-passcode">Access Passcode</label>
+          <input type="password" id="login-passcode" required placeholder="••••••••" style="background-color: var(--bg-input); padding: 0.65rem 0.8rem; letter-spacing: 2px;">
+          <span id="login-error" class="input-subtext" style="color: var(--danger); font-weight: 600; display: none; margin-top: 0.4rem;">Invalid passcode. Please try again.</span>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem; padding: 0.75rem 1.2rem;">
+          Sign In
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

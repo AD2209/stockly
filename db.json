@@ -1,0 +1,400 @@
+{
+  "auth": {
+    "admin": "admin123",
+    "staff": "staff123"
+  },
+  "items": [
+    {
+      "id": "item_1",
+      "name": "UPES UG flyer's",
+      "brand": "UPES",
+      "category": "Flyers",
+      "currentStock": 120,
+      "lowStockThreshold": 30
+    },
+    {
+      "id": "item_2",
+      "name": "UPES PG flyer's",
+      "brand": "UPES",
+      "category": "Flyers",
+      "currentStock": 85,
+      "lowStockThreshold": 30
+    },
+    {
+      "id": "item_3",
+      "name": "About UPES BROCHURE",
+      "brand": "UPES",
+      "category": "Brochures",
+      "currentStock": 40,
+      "lowStockThreshold": 15
+    },
+    {
+      "id": "item_4",
+      "name": "UPES BROCHURE ( SCHOOL OF BUSINESS )",
+      "brand": "UPES",
+      "category": "Brochures",
+      "currentStock": 60,
+      "lowStockThreshold": 20
+    },
+    {
+      "id": "item_5",
+      "name": "SCHOOL OF Computer Science ( SCHOOL OF ADVANCED ENGINEERING ) Brochure",
+      "brand": "UPES",
+      "category": "Brochures",
+      "currentStock": 8,
+      "lowStockThreshold": 20
+    },
+    {
+      "id": "item_6",
+      "name": "M B A BROCHURE",
+      "brand": "UPES",
+      "category": "Brochures",
+      "currentStock": 14,
+      "lowStockThreshold": 20
+    },
+    {
+      "id": "item_7",
+      "name": "SCHOOL OF MEDIA BROCHURE",
+      "brand": "UPES",
+      "category": "Brochures",
+      "currentStock": 35,
+      "lowStockThreshold": 15
+    },
+    {
+      "id": "item_8",
+      "name": "SCHOOL OF HEALTH SCIENCE Brochure",
+      "brand": "UPES",
+      "category": "Brochures",
+      "currentStock": 22,
+      "lowStockThreshold": 15
+    },
+    {
+      "id": "item_9",
+      "name": "SCHOOL OF DESIGN BROCHURE",
+      "brand": "UPES",
+      "category": "Brochures",
+      "currentStock": 18,
+      "lowStockThreshold": 15
+    },
+    {
+      "id": "item_10",
+      "name": "SCHOOL OF LAW BROCHURE",
+      "brand": "UPES",
+      "category": "Brochures",
+      "currentStock": 25,
+      "lowStockThreshold": 15
+    },
+    {
+      "id": "item_11",
+      "name": "SCHOOL OF LIBERAL STUDIES Brochure",
+      "brand": "UPES",
+      "category": "Brochures",
+      "currentStock": 12,
+      "lowStockThreshold": 15
+    },
+    {
+      "id": "item_12",
+      "name": "UPES NEW DIARY",
+      "brand": "UPES",
+      "category": "Stationery",
+      "currentStock": 5,
+      "lowStockThreshold": 10
+    },
+    {
+      "id": "item_13",
+      "name": "UPES laptop folder",
+      "brand": "UPES",
+      "category": "Stationery",
+      "currentStock": 30,
+      "lowStockThreshold": 10
+    },
+    {
+      "id": "item_14",
+      "name": "PEARL CLOTHS WITH PEARL UPES LOGO",
+      "brand": "PEARL",
+      "category": "Cloths & Table Cloths",
+      "currentStock": 15,
+      "lowStockThreshold": 5
+    },
+    {
+      "id": "item_15",
+      "name": "UPES LOGO TABLE CLOTHS",
+      "brand": "UPES",
+      "category": "Cloths & Table Cloths",
+      "currentStock": 6,
+      "lowStockThreshold": 5
+    },
+    {
+      "id": "item_16",
+      "name": "UPES PEN",
+      "brand": "UPES",
+      "category": "Stationery",
+      "currentStock": 400,
+      "lowStockThreshold": 100
+    },
+    {
+      "id": "item_17",
+      "name": "UPES CUBES",
+      "brand": "UPES",
+      "category": "Stationery",
+      "currentStock": 50,
+      "lowStockThreshold": 15
+    },
+    {
+      "id": "item_18",
+      "name": "UPES SHIPPER",
+      "brand": "UPES",
+      "category": "Stationery",
+      "currentStock": 28,
+      "lowStockThreshold": 10
+    },
+    {
+      "id": "item_19",
+      "name": "PG UPES FeedBack forms ONLY UPES LOGO",
+      "brand": "UPES",
+      "category": "Forms & OMR",
+      "currentStock": 150,
+      "lowStockThreshold": 50
+    },
+    {
+      "id": "item_20",
+      "name": "UG FeedBack forms ALL LOGO",
+      "brand": "Other",
+      "category": "Forms & OMR",
+      "currentStock": 200,
+      "lowStockThreshold": 50
+    },
+    {
+      "id": "item_21",
+      "name": "PG FeedBack forms ALL LOGO",
+      "brand": "Other",
+      "category": "Forms & OMR",
+      "currentStock": 180,
+      "lowStockThreshold": 50
+    },
+    {
+      "id": "item_22",
+      "name": "UPES OFFLINE NEW OMR FORM",
+      "brand": "UPES",
+      "category": "Forms & OMR",
+      "currentStock": 95,
+      "lowStockThreshold": 40
+    },
+    {
+      "id": "item_23",
+      "name": "PEARL OFFLINE OMR FORM",
+      "brand": "PEARL",
+      "category": "Forms & OMR",
+      "currentStock": 110,
+      "lowStockThreshold": 40
+    },
+    {
+      "id": "item_24",
+      "name": "Pearl Business application forms",
+      "brand": "PEARL",
+      "category": "Forms & OMR",
+      "currentStock": 75,
+      "lowStockThreshold": 25
+    },
+    {
+      "id": "item_25",
+      "name": "UPES CALENDER",
+      "brand": "UPES",
+      "category": "Calenders & Standees",
+      "currentStock": 0,
+      "lowStockThreshold": 15
+    },
+    {
+      "id": "item_26",
+      "name": "PEARL CALENDER",
+      "brand": "PEARL",
+      "category": "Calenders & Standees",
+      "currentStock": 30,
+      "lowStockThreshold": 15
+    },
+    {
+      "id": "item_27",
+      "name": "UPES STANDEE small",
+      "brand": "UPES",
+      "category": "Calenders & Standees",
+      "currentStock": 12,
+      "lowStockThreshold": 5
+    },
+    {
+      "id": "item_28",
+      "name": "PEARL STENDEE small",
+      "brand": "PEARL",
+      "category": "Calenders & Standees",
+      "currentStock": 15,
+      "lowStockThreshold": 5
+    },
+    {
+      "id": "item_29",
+      "name": "PEARL BROCHURE ( OGS OF CREATIVITY )",
+      "brand": "PEARL",
+      "category": "Brochures",
+      "currentStock": 40,
+      "lowStockThreshold": 15
+    },
+    {
+      "id": "item_30",
+      "name": "PEARL SCHOOL OF BUSINESS BROCHURE",
+      "brand": "PEARL",
+      "category": "Brochures",
+      "currentStock": 55,
+      "lowStockThreshold": 15
+    },
+    {
+      "id": "item_31",
+      "name": "PEARL BLACK BOOK CAES",
+      "brand": "PEARL",
+      "category": "Brochures",
+      "currentStock": 22,
+      "lowStockThreshold": 10
+    },
+    {
+      "id": "item_32",
+      "name": "DSGN-ED (RED BOOK) MY JOURNEY @ PEARL",
+      "brand": "PEARL",
+      "category": "Brochures",
+      "currentStock": 3,
+      "lowStockThreshold": 5
+    },
+    {
+      "id": "item_33",
+      "name": "pearl small Dairy",
+      "brand": "PEARL",
+      "category": "Stationery",
+      "currentStock": 45,
+      "lowStockThreshold": 10
+    },
+    {
+      "id": "item_34",
+      "name": "PEN Pearl",
+      "brand": "PEARL",
+      "category": "Stationery",
+      "currentStock": 250,
+      "lowStockThreshold": 50
+    },
+    {
+      "id": "item_35",
+      "name": "Nataraj Pencil KIT",
+      "brand": "Other",
+      "category": "Stationery",
+      "currentStock": 70,
+      "lowStockThreshold": 20
+    }
+  ],
+  "transactions": [
+    {
+      "id": "tx_1785562504472",
+      "itemId": "item_1785562504464",
+      "itemName": "Test Verification Item 1785562504463",
+      "type": "restock",
+      "quantity": 20,
+      "date": "2026-08-01T05:35:04.471Z",
+      "user": "Administrator",
+      "remarks": "Valid admin restock addition"
+    },
+    {
+      "id": "tx_1785562504470",
+      "itemId": "item_1785562504464",
+      "itemName": "Test Verification Item 1785562504463",
+      "type": "usage",
+      "quantity": 15,
+      "date": "2026-08-01T05:35:04.468Z",
+      "user": "Staff Member",
+      "remarks": "Valid staff usage subtraction"
+    },
+    {
+      "id": "tx_1785562504464",
+      "itemId": "item_1785562504464",
+      "itemName": "Test Verification Item 1785562504463",
+      "type": "restock",
+      "quantity": 50,
+      "date": "2026-08-01T05:35:04.464Z",
+      "user": "System Admin",
+      "remarks": "Initial stock on creation"
+    },
+    {
+      "id": "tx_1785561742101",
+      "itemId": "item_3",
+      "itemName": "About UPES BROCHURE",
+      "type": "usage",
+      "quantity": 15,
+      "date": "2026-08-01T05:22:00.000Z",
+      "user": "Manoj",
+      "remarks": "testing"
+    },
+    {
+      "id": "tx_1785560735220",
+      "itemId": "item_3",
+      "itemName": "About UPES BROCHURE",
+      "type": "restock",
+      "quantity": 10,
+      "date": "2026-08-01T05:05:00.000Z",
+      "user": "Manoj",
+      "remarks": "testing"
+    },
+    {
+      "id": "tx_1785560002428",
+      "itemId": "item_1785560002415",
+      "itemName": "Test Verification Item 1785560002395",
+      "type": "restock",
+      "quantity": 30,
+      "date": "2026-08-01T04:53:22.425Z",
+      "user": "Test Runner",
+      "remarks": "Automated validation add"
+    },
+    {
+      "id": "tx_1785560002421",
+      "itemId": "item_1785560002415",
+      "itemName": "Test Verification Item 1785560002395",
+      "type": "usage",
+      "quantity": 10,
+      "date": "2026-08-01T04:53:22.417Z",
+      "user": "Test Runner",
+      "remarks": "Automated validation reduction"
+    },
+    {
+      "id": "tx_1785560002415",
+      "itemId": "item_1785560002415",
+      "itemName": "Test Verification Item 1785560002395",
+      "type": "restock",
+      "quantity": 50,
+      "date": "2026-08-01T04:53:22.415Z",
+      "user": "System Admin",
+      "remarks": "Initial stock on creation"
+    },
+    {
+      "id": "tx_initial_1",
+      "itemId": "item_25",
+      "itemName": "UPES CALENDER",
+      "type": "usage",
+      "quantity": 20,
+      "date": "2026-07-31T09:00:00.000Z",
+      "user": "System Admin",
+      "remarks": "Distributed for orientation"
+    },
+    {
+      "id": "tx_initial_2",
+      "itemId": "item_5",
+      "itemName": "SCHOOL OF Computer Science ( SCHOOL OF ADVANCED ENGINEERING ) Brochure",
+      "type": "usage",
+      "quantity": 12,
+      "date": "2026-08-01T02:30:00.000Z",
+      "user": "Counseling Team",
+      "remarks": "Used during student visit"
+    },
+    {
+      "id": "tx_initial_3",
+      "itemId": "item_12",
+      "itemName": "UPES NEW DIARY",
+      "type": "restock",
+      "quantity": 50,
+      "date": "2026-07-28T11:45:00.000Z",
+      "user": "Admin Procurement",
+      "remarks": "Received new batch from vendor"
+    }
+  ]
+}
