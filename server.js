@@ -313,7 +313,13 @@ app.post('/api/items', requireAuth(['admin']), async (req, res) => {
 // Update an item
 app.put('/api/items/:id', requireAuth(['admin']), async (req, res) => {
   const { id } = req.params;
-  const { name, brand, category, lowStockThreshold } = req.body;
+  const { name, brand, category, lowStockThreshold, currentStock } = req.body;
+
+  const items = await getInventory();
+  const existingItem = items.find(item => item.id === id);
+  if (!existingItem) {
+    return res.status(404).json({ error: 'Item not found.' });
+  }
 
   const updates = {};
   if (name) updates.name = name.trim();
@@ -321,11 +327,32 @@ app.put('/api/items/:id', requireAuth(['admin']), async (req, res) => {
   if (category) updates.category = category.trim();
   if (lowStockThreshold !== undefined) updates.lowStockThreshold = Number(lowStockThreshold);
 
+  if (currentStock !== undefined) {
+    const newStock = Number(currentStock);
+    if (newStock !== existingItem.currentStock) {
+      updates.currentStock = newStock;
+      
+      // Log manual adjustment transaction
+      const diff = newStock - existingItem.currentStock;
+      const tx = {
+        id: `tx_${Date.now()}`,
+        itemId: id,
+        itemName: updates.name || existingItem.name,
+        type: diff > 0 ? 'restock' : 'usage',
+        quantity: Math.abs(diff),
+        date: new Date().toISOString(),
+        user: 'System Admin',
+        remarks: `Bulk stock edit (from ${existingItem.currentStock} to ${newStock})`
+      };
+      await addTransaction(tx);
+    }
+  }
+
   const updatedItem = await updateInventoryItem(id, updates);
   if (updatedItem) {
     res.json({ success: true, item: updatedItem });
   } else {
-    res.status(404).json({ error: 'Item not found.' });
+    res.status(500).json({ error: 'Failed to update item.' });
   }
 });
 

@@ -4,6 +4,7 @@ let transactions = [];
 let activeTransactionType = 'usage'; // 'usage' or 'restock'
 let currentUserRole = null;
 let sessionToken = null;
+let isBulkEditMode = false;
 
 // API endpoints
 const API_BASE = '/api';
@@ -84,6 +85,10 @@ const elements = {
   btnImport: document.getElementById('btn-import'),
   importFileInput: document.getElementById('import-file-input'),
   btnAddItem: document.getElementById('btn-add-item'),
+  btnBulkEdit: document.getElementById('btn-bulk-edit'),
+  btnBulkSave: document.getElementById('btn-bulk-save'),
+  btnBulkCancel: document.getElementById('btn-bulk-cancel'),
+  bulkActionsContainer: document.getElementById('bulk-actions-container'),
   
   // Toast
   toast: document.getElementById('toast'),
@@ -189,6 +194,9 @@ function signOut() {
   localStorage.removeItem('role');
 
   document.body.classList.remove('role-admin', 'role-staff');
+  
+  // Reset bulk edit mode
+  isBulkEditMode = false;
   
   // Clear data lists
   inventory = [];
@@ -345,51 +353,165 @@ function renderInventory() {
     const brandClass = item.brand.toLowerCase() === 'upes' ? 'upes' : 
                         item.brand.toLowerCase() === 'pearl' ? 'pearl' : 'other';
 
-    // Progress Bar percentage (capped at 100)
-    // We assume double the threshold represents "ideal" level for scale
-    const ideal = item.lowStockThreshold * 2.5;
-    const progressPercent = Math.min(100, Math.round((item.currentStock / ideal) * 100));
-    let progressColor = 'var(--success)';
-    if (item.currentStock === 0) progressColor = 'var(--danger)';
-    else if (item.currentStock <= item.lowStockThreshold) progressColor = 'var(--warning)';
+    if (isBulkEditMode) {
+      tr.innerHTML = `
+        <td style="font-weight: 500;">${escapeHtml(item.name)}</td>
+        <td><span class="brand-badge ${brandClass}">${escapeHtml(item.brand)}</span></td>
+        <td><span style="color: var(--text-muted); font-size: 0.85rem;">${escapeHtml(item.category)}</span></td>
+        <td class="text-right">
+          <span class="status-badge ${statusClass}">${statusLabel}</span>
+        </td>
+        <td class="text-right">
+          <input type="number" class="bulk-edit-input bulk-qty" data-id="${item.id}" min="0" value="${item.currentStock}">
+        </td>
+        <td class="text-right">
+          <input type="number" class="bulk-edit-input bulk-threshold" data-id="${item.id}" min="1" value="${item.lowStockThreshold}">
+        </td>
+        <td class="text-center" style="color: var(--text-dark); font-style: italic; font-size: 0.8rem;">
+          Bulk Editing
+        </td>
+      `;
+    } else {
+      // Progress Bar percentage (capped at 100)
+      // We assume double the threshold represents "ideal" level for scale
+      const ideal = item.lowStockThreshold * 2.5;
+      const progressPercent = Math.min(100, Math.round((item.currentStock / ideal) * 100));
+      let progressColor = 'var(--success)';
+      if (item.currentStock === 0) progressColor = 'var(--danger)';
+      else if (item.currentStock <= item.lowStockThreshold) progressColor = 'var(--warning)';
 
-    tr.innerHTML = `
-      <td style="font-weight: 500;">${escapeHtml(item.name)}</td>
-      <td><span class="brand-badge ${brandClass}">${escapeHtml(item.brand)}</span></td>
-      <td><span style="color: var(--text-muted); font-size: 0.85rem;">${escapeHtml(item.category)}</span></td>
-      <td class="text-right">
-        <span class="status-badge ${statusClass}">${statusLabel}</span>
-      </td>
-      <td class="text-right stock-value-cell">
-        <div class="stock-progress-container">
-          <span>${item.currentStock}</span>
-          <div class="stock-bar-outer">
-            <div class="stock-bar-inner" style="width: ${progressPercent}%; background-color: ${progressColor};"></div>
+      tr.innerHTML = `
+        <td style="font-weight: 500;">${escapeHtml(item.name)}</td>
+        <td><span class="brand-badge ${brandClass}">${escapeHtml(item.brand)}</span></td>
+        <td><span style="color: var(--text-muted); font-size: 0.85rem;">${escapeHtml(item.category)}</span></td>
+        <td class="text-right">
+          <span class="status-badge ${statusClass}">${statusLabel}</span>
+        </td>
+        <td class="text-right stock-value-cell">
+          <div class="stock-progress-container">
+            <span>${item.currentStock}</span>
+            <div class="stock-bar-outer">
+              <div class="stock-bar-inner" style="width: ${progressPercent}%; background-color: ${progressColor};"></div>
+            </div>
           </div>
-        </div>
-      </td>
-      <td class="text-right" style="color: var(--text-dark); font-weight: 600;">${item.lowStockThreshold}</td>
-      <td class="text-center">
-        <div class="table-actions">
-          <button class="btn-action-round hover-usage" onclick="openTxModal('${item.id}', 'usage')" title="Record Usage (Out)">
-            <i data-lucide="trending-down"></i>
-          </button>
-          <button class="btn-action-round hover-restock admin-only" onclick="openTxModal('${item.id}', 'restock')" title="Restock (In)">
-            <i data-lucide="trending-up"></i>
-          </button>
-          <button class="btn-action-round hover-edit admin-only" onclick="openEditItemModal('${item.id}')" title="Edit Item">
-            <i data-lucide="edit-3"></i>
-          </button>
-          <button class="btn-action-round hover-delete admin-only" onclick="deleteItem('${item.id}')" title="Delete Item">
-            <i data-lucide="trash-2"></i>
-          </button>
-        </div>
-      </td>
-    `;
+        </td>
+        <td class="text-right" style="color: var(--text-dark); font-weight: 600;">${item.lowStockThreshold}</td>
+        <td class="text-center">
+          <div class="table-actions">
+            <button class="btn-action-round hover-usage" onclick="openTxModal('${item.id}', 'usage')" title="Record Usage (Out)">
+              <i data-lucide="trending-down"></i>
+            </button>
+            <button class="btn-action-round hover-restock admin-only" onclick="openTxModal('${item.id}', 'restock')" title="Restock (In)">
+              <i data-lucide="trending-up"></i>
+            </button>
+            <button class="btn-action-round hover-edit admin-only" onclick="openEditItemModal('${item.id}')" title="Edit Item">
+              <i data-lucide="edit-3"></i>
+            </button>
+            <button class="btn-action-round hover-delete admin-only" onclick="deleteItem('${item.id}')" title="Delete Item">
+              <i data-lucide="trash-2"></i>
+            </button>
+          </div>
+        </td>
+      `;
+    }
     elements.inventoryTbody.appendChild(tr);
   });
 
   lucide.createIcons();
+}
+
+// Toggle Bulk Edit Mode
+function toggleBulkEditMode(active) {
+  isBulkEditMode = active;
+  
+  if (active) {
+    // Disable filters
+    elements.searchInput.disabled = true;
+    elements.filterBrand.disabled = true;
+    elements.filterCategory.disabled = true;
+    elements.filterStatus.disabled = true;
+    
+    // Show bulk actions, hide normal actions
+    elements.bulkActionsContainer.style.display = 'flex';
+    elements.btnBulkEdit.style.display = 'none';
+    elements.btnAddItem.style.display = 'none';
+  } else {
+    // Enable filters
+    elements.searchInput.disabled = false;
+    elements.filterBrand.disabled = false;
+    elements.filterCategory.disabled = false;
+    elements.filterStatus.disabled = false;
+    
+    // Hide bulk actions, show normal actions
+    elements.bulkActionsContainer.style.display = 'none';
+    elements.btnBulkEdit.style.display = 'inline-flex';
+    elements.btnAddItem.style.display = 'inline-flex';
+  }
+  
+  renderInventory();
+}
+
+// Save Bulk Changes
+async function saveBulkChanges() {
+  console.log('Bulk save triggered');
+  const qtyInputs = document.querySelectorAll('.bulk-qty');
+  const thresholdInputs = document.querySelectorAll('.bulk-threshold');
+  
+  const updates = [];
+  
+  qtyInputs.forEach(input => {
+    const id = input.getAttribute('data-id');
+    const qty = Number(input.value);
+    
+    const threshInput = Array.from(thresholdInputs).find(t => t.getAttribute('data-id') === id);
+    const threshold = threshInput ? Number(threshInput.value) : undefined;
+    
+    const existing = inventory.find(i => i.id === id);
+    console.log(`Checking item ${id}: existingStock=${existing ? existing.currentStock : 'null'}, newStock=${qty}, existingThresh=${existing ? existing.lowStockThreshold : 'null'}, newThresh=${threshold}`);
+    
+    if (existing) {
+      const hasQtyChange = existing.currentStock !== qty;
+      const hasThreshChange = threshold !== undefined && existing.lowStockThreshold !== threshold;
+      
+      if (hasQtyChange || hasThreshChange) {
+        const updateObj = { id };
+        if (hasQtyChange) updateObj.currentStock = qty;
+        if (hasThreshChange) updateObj.lowStockThreshold = threshold;
+        updates.push(updateObj);
+      }
+    }
+  });
+  
+  console.log('Gathered updates:', updates);
+  
+  if (updates.length === 0) {
+    showToast('No changes detected.', 'info');
+    toggleBulkEditMode(false);
+    return;
+  }
+  
+  showToast(`Saving changes for ${updates.length} items...`, 'info');
+  
+  try {
+    let successCount = 0;
+    for (const update of updates) {
+      const res = await secureFetch(`${API_BASE}/items/${update.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(update)
+      });
+      if (res.ok) {
+        successCount++;
+      }
+    }
+    
+    showToast(`Successfully updated ${successCount} items.`, 'success');
+    toggleBulkEditMode(false);
+    fetchData();
+  } catch (err) {
+    console.error('Error saving bulk updates:', err);
+    showToast('An error occurred while saving updates.', 'error');
+  }
 }
 
 // Render Transaction Logs
@@ -788,6 +910,9 @@ function setupEventListeners() {
 
   elements.themeToggle.addEventListener('click', toggleTheme);
   elements.btnAddItem.addEventListener('click', openAddItemModal);
+  elements.btnBulkEdit.addEventListener('click', () => toggleBulkEditMode(true));
+  elements.btnBulkCancel.addEventListener('click', () => toggleBulkEditMode(false));
+  elements.btnBulkSave.addEventListener('click', saveBulkChanges);
   
   // Close modals
   document.querySelectorAll('.btn-close-modal').forEach(btn => {

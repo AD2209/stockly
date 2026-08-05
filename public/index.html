@@ -45,6 +45,20 @@
         <span>Restore JSON</span>
       </button>
       <input type="file" id="import-file-input" style="display: none;" accept=".json">
+      <button id="btn-bulk-edit" class="btn btn-secondary btn-icon-text admin-only">
+        <i data-lucide="edit"></i>
+        <span>Bulk Edit</span>
+      </button>
+      <div id="bulk-actions-container" class="admin-only" style="display: none; gap: 0.5rem; align-items: center;">
+        <button id="btn-bulk-save" class="btn btn-primary btn-icon-text" style="background-color: var(--success); border-color: var(--success);">
+          <i data-lucide="check"></i>
+          <span>Save All</span>
+        </button>
+        <button id="btn-bulk-cancel" class="btn btn-secondary btn-icon-text">
+          <i data-lucide="x"></i>
+          <span>Cancel</span>
+        </button>
+      </div>
       <button id="btn-add-item" class="btn btn-primary btn-icon-text admin-only">
         <i data-lucide="plus-circle"></i>
         <span>New Item</span>
@@ -248,7 +262,7 @@
         <button type="button" id="tab-usage" class="tx-tab active" onclick="setTxType('usage')">
           <i data-lucide="trending-down"></i> Record Usage (Out)
         </button>
-        <button type="button" id="tab-restock" class="tx-tab" onclick="setTxType('restock')">
+        <button type="button" id="tab-restock" class="tx-tab admin-only" onclick="setTxType('restock')">
           <i data-lucide="trending-up"></i> Restock (In)
         </button>
       </div>
