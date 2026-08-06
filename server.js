@@ -63,13 +63,13 @@ async function initDatabase() {
 function readLocalDB() {
   try {
     if (!fs.existsSync(DB_FILE)) {
-      return { items: [], transactions: [], auth: { admin: 'admin123', staff: 'staff123' } };
+      return { items: [], transactions: [], auth: { admin: 'Pearl@123', staff: 'Gus@123$' } };
     }
     const data = fs.readFileSync(DB_FILE, 'utf8');
     return JSON.parse(data);
   } catch (err) {
     console.error('Error reading local database file:', err);
-    return { items: [], transactions: [], auth: { admin: 'admin123', staff: 'staff123' } };
+    return { items: [], transactions: [], auth: { admin: 'Pearl@123', staff: 'Gus@123$' } };
   }
 }
 
@@ -158,7 +158,7 @@ async function addTransaction(tx) {
 }
 
 async function getAuthCredentials() {
-  const defaultAuth = { admin: 'admin123', staff: 'staff123' };
+  const defaultAuth = { admin: 'Pearl@123', staff: 'Gus@123$' };
   if (useMongo) {
     const config = await db.collection('config').findOne({ id: 'auth' });
     return config ? config.credentials : defaultAuth;

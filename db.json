@@ -1,7 +1,7 @@
 {
   "auth": {
-    "admin": "admin123",
-    "staff": "staff123"
+    "admin": "Pearl@123",
+    "staff": "Gus@123$"
   },
   "items": [
     {
@@ -9,7 +9,7 @@
       "name": "UPES UG flyer's",
       "brand": "UPES",
       "category": "Flyers",
-      "currentStock": 120,
+      "currentStock": 125,
       "lowStockThreshold": 30
     },
     {
@@ -25,7 +25,7 @@
       "name": "About UPES BROCHURE",
       "brand": "UPES",
       "category": "Brochures",
-      "currentStock": 40,
+      "currentStock": 0,
       "lowStockThreshold": 15
     },
     {
@@ -122,7 +122,7 @@
       "brand": "UPES",
       "category": "Cloths & Table Cloths",
       "currentStock": 6,
-      "lowStockThreshold": 5
+      "lowStockThreshold": 0
     },
     {
       "id": "item_16",
@@ -233,7 +233,7 @@
       "name": "PEARL BROCHURE ( OGS OF CREATIVITY )",
       "brand": "PEARL",
       "category": "Brochures",
-      "currentStock": 40,
+      "currentStock": 0,
       "lowStockThreshold": 15
     },
     {
@@ -257,7 +257,7 @@
       "name": "DSGN-ED (RED BOOK) MY JOURNEY @ PEARL",
       "brand": "PEARL",
       "category": "Brochures",
-      "currentStock": 3,
+      "currentStock": 0,
       "lowStockThreshold": 5
     },
     {
@@ -281,11 +281,181 @@
       "name": "Nataraj Pencil KIT",
       "brand": "Other",
       "category": "Stationery",
-      "currentStock": 70,
+      "currentStock": 0,
       "lowStockThreshold": 20
     }
   ],
   "transactions": [
+    {
+      "id": "tx_1785998775790",
+      "itemId": "item_1785998775777",
+      "itemName": "Test Verification Item 1785998775777",
+      "type": "restock",
+      "quantity": 20,
+      "date": "2026-08-06T06:46:15.788Z",
+      "user": "Administrator",
+      "remarks": "Valid admin restock addition"
+    },
+    {
+      "id": "tx_1785998775785",
+      "itemId": "item_1785998775777",
+      "itemName": "Test Verification Item 1785998775777",
+      "type": "usage",
+      "quantity": 15,
+      "date": "2026-08-06T06:46:15.783Z",
+      "user": "Staff Member",
+      "remarks": "Valid staff usage subtraction"
+    },
+    {
+      "id": "tx_1785998775778",
+      "itemId": "item_1785998775777",
+      "itemName": "Test Verification Item 1785998775777",
+      "type": "restock",
+      "quantity": 50,
+      "date": "2026-08-06T06:46:15.778Z",
+      "user": "System Admin",
+      "remarks": "Initial stock on creation"
+    },
+    {
+      "id": "tx_1785998713233",
+      "itemId": "item_1785998713220",
+      "itemName": "Test Verification Item 1785998713218",
+      "type": "restock",
+      "quantity": 20,
+      "date": "2026-08-06T06:45:13.231Z",
+      "user": "Administrator",
+      "remarks": "Valid admin restock addition"
+    },
+    {
+      "id": "tx_1785998713229",
+      "itemId": "item_1785998713220",
+      "itemName": "Test Verification Item 1785998713218",
+      "type": "usage",
+      "quantity": 15,
+      "date": "2026-08-06T06:45:13.226Z",
+      "user": "Staff Member",
+      "remarks": "Valid staff usage subtraction"
+    },
+    {
+      "id": "tx_1785998713221",
+      "itemId": "item_1785998713220",
+      "itemName": "Test Verification Item 1785998713218",
+      "type": "restock",
+      "quantity": 50,
+      "date": "2026-08-06T06:45:13.221Z",
+      "user": "System Admin",
+      "remarks": "Initial stock on creation"
+    },
+    {
+      "id": "tx_1785997590785",
+      "itemId": "item_1785997590763",
+      "itemName": "Test Verification Item 1785997590760",
+      "type": "restock",
+      "quantity": 20,
+      "date": "2026-08-06T06:26:30.781Z",
+      "user": "Administrator",
+      "remarks": "Valid admin restock addition"
+    },
+    {
+      "id": "tx_1785997590777",
+      "itemId": "item_1785997590763",
+      "itemName": "Test Verification Item 1785997590760",
+      "type": "usage",
+      "quantity": 15,
+      "date": "2026-08-06T06:26:30.772Z",
+      "user": "Staff Member",
+      "remarks": "Valid staff usage subtraction"
+    },
+    {
+      "id": "tx_1785997590765",
+      "itemId": "item_1785997590763",
+      "itemName": "Test Verification Item 1785997590760",
+      "type": "restock",
+      "quantity": 50,
+      "date": "2026-08-06T06:26:30.765Z",
+      "user": "System Admin",
+      "remarks": "Initial stock on creation"
+    },
+    {
+      "id": "tx_1785952724539",
+      "itemId": "item_29",
+      "itemName": "PEARL BROCHURE ( OGS OF CREATIVITY )",
+      "type": "usage",
+      "quantity": 40,
+      "date": "2026-08-05T17:58:44.539Z",
+      "user": "System Admin",
+      "remarks": "Bulk stock edit (from 40 to 0)"
+    },
+    {
+      "id": "tx_1785952724533",
+      "itemId": "item_35",
+      "itemName": "Nataraj Pencil KIT",
+      "type": "usage",
+      "quantity": 70,
+      "date": "2026-08-05T17:58:44.533Z",
+      "user": "System Admin",
+      "remarks": "Bulk stock edit (from 70 to 0)"
+    },
+    {
+      "id": "tx_1785952717468",
+      "itemId": "item_32",
+      "itemName": "DSGN-ED (RED BOOK) MY JOURNEY @ PEARL",
+      "type": "usage",
+      "quantity": 3,
+      "date": "2026-08-05T17:58:37.468Z",
+      "user": "System Admin",
+      "remarks": "Bulk stock edit (from 3 to 0)"
+    },
+    {
+      "id": "tx_1785951494754",
+      "itemId": "item_1",
+      "itemName": "UPES UG flyer's",
+      "type": "restock",
+      "quantity": 5,
+      "date": "2026-08-05T17:38:14.754Z",
+      "user": "System Admin",
+      "remarks": "Bulk stock edit (from 120 to 125)"
+    },
+    {
+      "id": "tx_1785951418736",
+      "itemId": "item_3",
+      "itemName": "About UPES BROCHURE",
+      "type": "usage",
+      "quantity": 40,
+      "date": "2026-08-05T17:36:00.000Z",
+      "user": "Admin",
+      "remarks": "aa"
+    },
+    {
+      "id": "tx_1785951249594",
+      "itemId": "item_1785951249580",
+      "itemName": "Test Verification Item 1785951249579",
+      "type": "restock",
+      "quantity": 20,
+      "date": "2026-08-05T17:34:09.592Z",
+      "user": "Administrator",
+      "remarks": "Valid admin restock addition"
+    },
+    {
+      "id": "tx_1785951249589",
+      "itemId": "item_1785951249580",
+      "itemName": "Test Verification Item 1785951249579",
+      "type": "usage",
+      "quantity": 15,
+      "date": "2026-08-05T17:34:09.587Z",
+      "user": "Staff Member",
+      "remarks": "Valid staff usage subtraction"
+    },
+    {
+      "id": "tx_1785951249582",
+      "itemId": "item_1785951249580",
+      "itemName": "Test Verification Item 1785951249579",
+      "type": "restock",
+      "quantity": 50,
+      "date": "2026-08-05T17:34:09.582Z",
+      "user": "System Admin",
+      "remarks": "Initial stock on creation"
+    },
     {
       "id": "tx_1785564017792",
       "itemId": "item_1785564017781",

@@ -147,7 +147,7 @@ async function handleLogin(e) {
     // Reset login form
     elements.loginForm.reset();
 
-    showToast(`Signed in successfully as ${currentUserRole === 'admin' ? 'Administrator' : 'Staff'}`, 'success');
+    showToast(`Signed in successfully as ${currentUserRole === 'admin' ? 'Administrator' : 'Dispatch'}`, 'success');
     
     // Fetch data
     fetchData();
@@ -582,7 +582,7 @@ function openTxModal(id, type) {
   const tzOffset = now.getTimezoneOffset() * 60000; 
   const localISOTime = (new Date(now - tzOffset)).toISOString().slice(0, 16);
   elements.txDate.value = localISOTime;
-  elements.txUser.value = (currentUserRole === 'admin' ? 'Admin' : 'Staff');
+  elements.txUser.value = (currentUserRole === 'admin' ? 'Admin' : 'Dispatch');
 
   setTxType(type);
   elements.transactionModal.classList.add('active');

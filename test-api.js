@@ -51,13 +51,13 @@ async function runTests() {
   let adminToken = null;
   let staffToken = null;
 
-  // Test 1: GET /api/inventory (No Auth)
+  // Test 1: GET /api/inventory (No Auth / Public Guest Access)
   try {
     const res = await makeRequest(`${BASE_URL}/inventory`);
-    if (res.statusCode === 401) {
-      console.log('✅ Test 1 Passed: Unauthenticated request rejected with 401 Unauthorized.');
+    if (res.statusCode === 200 && Array.isArray(res.body)) {
+      console.log('✅ Test 1 Passed: Public guest access allowed (200 OK).');
     } else {
-      console.log('❌ Test 1 Failed: Expected status 401, got:', res.statusCode, res.body);
+      console.log('❌ Test 1 Failed: Expected status 200 and inventory array, got:', res.statusCode, res.body);
       failures++;
     }
   } catch (err) {
@@ -65,11 +65,11 @@ async function runTests() {
     failures++;
   }
 
-  // Test 2: Login as Staff (Passcode: staff123)
+  // Test 2: Login as Staff (Passcode: Gus@123$)
   try {
     const res = await makeRequest(`${BASE_URL}/login`, 'POST', {
       role: 'staff',
-      passcode: 'staff123'
+      passcode: 'Gus@123$'
     });
     if (res.statusCode === 200 && res.body.success && res.body.token) {
       staffToken = res.body.token;
@@ -83,11 +83,11 @@ async function runTests() {
     failures++;
   }
 
-  // Test 3: Login as Admin (Passcode: admin123)
+  // Test 3: Login as Admin (Passcode: Pearl@123)
   try {
     const res = await makeRequest(`${BASE_URL}/login`, 'POST', {
       role: 'admin',
-      passcode: 'admin123'
+      passcode: 'Pearl@123'
     });
     if (res.statusCode === 200 && res.body.success && res.body.token) {
       adminToken = res.body.token;
