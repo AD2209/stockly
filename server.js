@@ -50,6 +50,20 @@ async function initDatabase() {
         }
         console.log('✅ MongoDB seeding complete.');
       }
+
+      // Always sync auth credentials from local db.json to MongoDB Atlas config
+      if (fs.existsSync(DB_FILE)) {
+        const localData = JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
+        if (localData.auth) {
+          console.log('Syncing auth credentials from local db.json to MongoDB Atlas...');
+          await db.collection('config').updateOne(
+            { id: 'auth' },
+            { $set: { credentials: localData.auth } },
+            { upsert: true }
+          );
+          console.log('✅ Credentials synced to MongoDB Atlas.');
+        }
+      }
     } catch (err) {
       console.error('❌ Failed to connect to MongoDB. Falling back to local db.json.', err);
       useMongo = false;
