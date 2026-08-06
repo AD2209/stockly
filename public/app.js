@@ -730,6 +730,7 @@ async function submitTransaction(e) {
 function closeModals() {
   elements.itemModal.classList.remove('active');
   elements.transactionModal.classList.remove('active');
+  elements.loginModal.classList.remove('active');
 }
 
 // Export Backup
@@ -904,6 +905,9 @@ function setupEventListeners() {
   });
   elements.transactionModal.addEventListener('click', (e) => {
     if (e.target === elements.transactionModal) closeModals();
+  });
+  elements.loginModal.addEventListener('click', (e) => {
+    if (e.target === elements.loginModal) closeModals();
   });
 
   // Forms
