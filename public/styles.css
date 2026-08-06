@@ -1075,7 +1075,24 @@ textarea:focus {
 .toast-info i { color: var(--secondary); }
 
 /* Admin-only visibility utility */
-body.role-staff .admin-only {
+body.role-staff .admin-only,
+body.role-guest .admin-only {
+  display: none !important;
+}
+
+/* Staff or Admin only visibility */
+body.role-guest .staff-or-admin {
+  display: none !important;
+}
+
+/* Guest-only visibility utility */
+body.role-admin .guest-only,
+body.role-staff .guest-only {
+  display: none !important;
+}
+
+/* Hide sign out for guests */
+body.role-guest #btn-logout {
   display: none !important;
 }
 

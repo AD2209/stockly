@@ -260,7 +260,7 @@ app.post('/api/db/import', requireAuth(['admin']), async (req, res) => {
 });
 
 // Get all inventory items
-app.get('/api/inventory', requireAuth(['admin', 'staff']), async (req, res) => {
+app.get('/api/inventory', async (req, res) => {
   const items = await getInventory();
   res.json(items);
 });
@@ -368,7 +368,7 @@ app.delete('/api/items/:id', requireAuth(['admin']), async (req, res) => {
 });
 
 // Get transaction history
-app.get('/api/transactions', requireAuth(['admin', 'staff']), async (req, res) => {
+app.get('/api/transactions', async (req, res) => {
   const transactions = await getTransactions();
   res.json(transactions);
 });

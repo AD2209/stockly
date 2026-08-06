@@ -63,6 +63,10 @@
         <i data-lucide="plus-circle"></i>
         <span>New Item</span>
       </button>
+      <button id="btn-login-trigger" class="btn btn-primary btn-icon-text guest-only">
+        <i data-lucide="log-in"></i>
+        <span>Sign In</span>
+      </button>
       <button id="btn-logout" class="btn btn-secondary btn-icon-text" title="Sign Out">
         <i data-lucide="log-out"></i>
         <span>Sign Out</span>
@@ -316,9 +320,10 @@
   </div>
 
   <!-- MODAL: LOGIN SCREEN OVERLAY -->
-  <div class="modal-overlay active" id="login-modal" style="pointer-events: all; opacity: 1; background-color: var(--bg-main); z-index: 2000;">
+  <div class="modal-overlay" id="login-modal">
     <div class="modal-card" style="max-width: 400px; border: 1px solid var(--border-color); box-shadow: var(--shadow-lg);">
-      <div class="modal-header" style="justify-content: center; padding: 2rem 1.5rem 0.5rem 1.5rem; border-bottom: none;">
+      <div class="modal-header" style="justify-content: space-between; padding: 1.5rem 1.5rem 0.5rem 1.5rem; border-bottom: none; width: 100%;">
+        <div style="width: 24px;"></div>
         <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem; text-align: center;">
           <div class="logo-icon" style="margin-bottom: 0.5rem;">
             <i data-lucide="lock"></i>
@@ -326,6 +331,7 @@
           <h2 style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; letter-spacing: 0.5px;">STOCKLY SECURE</h2>
           <p style="font-size: 0.8rem; color: var(--text-muted);">Enter passcode to access inventory</p>
         </div>
+        <button type="button" class="modal-close btn-close-modal" style="align-self: flex-start;"><i data-lucide="x"></i></button>
       </div>
       <form id="login-form" style="padding: 1.5rem 2rem 2rem 2rem;">
         <div class="form-group">

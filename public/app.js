@@ -102,7 +102,8 @@ const elements = {
   loginRole: document.getElementById('login-role'),
   loginPasscode: document.getElementById('login-passcode'),
   loginError: document.getElementById('login-error'),
-  btnLogout: document.getElementById('btn-logout')
+  btnLogout: document.getElementById('btn-logout'),
+  btnLoginTrigger: document.getElementById('btn-login-trigger')
 };
 
 // Initialize Application
@@ -136,17 +137,11 @@ async function handleLogin(e) {
     sessionToken = data.token;
     currentUserRole = data.role;
 
-    // Persist
-    localStorage.setItem('token', sessionToken);
-    localStorage.setItem('role', currentUserRole);
-
     // Apply role CSS to body
-    document.body.classList.remove('role-admin', 'role-staff');
+    document.body.classList.remove('role-admin', 'role-staff', 'role-guest');
     document.body.classList.add(`role-${currentUserRole}`);
 
-    // Hide modal (fade out)
-    elements.loginModal.style.opacity = '0';
-    elements.loginModal.style.pointerEvents = 'none';
+    // Hide modal
     elements.loginModal.classList.remove('active');
 
     // Reset login form
@@ -164,50 +159,31 @@ async function handleLogin(e) {
 }
 
 function checkAuth() {
-  const token = localStorage.getItem('token');
-  const role = localStorage.getItem('role');
-
-  if (token && role) {
-    sessionToken = token;
-    currentUserRole = role;
-
-    document.body.classList.remove('role-admin', 'role-staff');
-    document.body.classList.add(`role-${currentUserRole}`);
-
-    elements.loginModal.style.opacity = '0';
-    elements.loginModal.style.pointerEvents = 'none';
-    elements.loginModal.classList.remove('active');
-    
-    fetchData();
-  } else {
-    document.body.classList.remove('role-admin', 'role-staff');
-    elements.loginModal.style.opacity = '1';
-    elements.loginModal.style.pointerEvents = 'all';
-    elements.loginModal.classList.add('active');
-  }
+  // Always start signed out as guest on load
+  sessionToken = null;
+  currentUserRole = 'guest';
+  document.body.classList.remove('role-admin', 'role-staff');
+  document.body.classList.add('role-guest');
+  
+  elements.loginModal.classList.remove('active');
+  
+  fetchData();
 }
 
 function signOut() {
   sessionToken = null;
-  currentUserRole = null;
-  localStorage.removeItem('token');
-  localStorage.removeItem('role');
+  currentUserRole = 'guest';
 
   document.body.classList.remove('role-admin', 'role-staff');
+  document.body.classList.add('role-guest');
   
   // Reset bulk edit mode
   isBulkEditMode = false;
   
-  // Clear data lists
+  // Clear and reload data
   inventory = [];
   transactions = [];
-  renderInventory();
-  renderTransactions();
-
-  // Show login block
-  elements.loginModal.style.opacity = '1';
-  elements.loginModal.style.pointerEvents = 'all';
-  elements.loginModal.classList.add('active');
+  fetchData();
   
   showToast('Signed out successfully', 'info');
 }
@@ -398,7 +374,7 @@ function renderInventory() {
         <td class="text-right" style="color: var(--text-dark); font-weight: 600;">${item.lowStockThreshold}</td>
         <td class="text-center">
           <div class="table-actions">
-            <button class="btn-action-round hover-usage" onclick="openTxModal('${item.id}', 'usage')" title="Record Usage (Out)">
+            <button class="btn-action-round hover-usage staff-or-admin" onclick="openTxModal('${item.id}', 'usage')" title="Record Usage (Out)">
               <i data-lucide="trending-down"></i>
             </button>
             <button class="btn-action-round hover-restock admin-only" onclick="openTxModal('${item.id}', 'restock')" title="Restock (In)">
@@ -913,6 +889,9 @@ function setupEventListeners() {
   elements.btnBulkEdit.addEventListener('click', () => toggleBulkEditMode(true));
   elements.btnBulkCancel.addEventListener('click', () => toggleBulkEditMode(false));
   elements.btnBulkSave.addEventListener('click', saveBulkChanges);
+  elements.btnLoginTrigger.addEventListener('click', () => {
+    elements.loginModal.classList.add('active');
+  });
   
   // Close modals
   document.querySelectorAll('.btn-close-modal').forEach(btn => {
